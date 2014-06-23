@@ -1,22 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package testing;
 
-/**
- *
- * @author RaghunadhaReddy
- */
-public class Testing {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    /**
-     * @param args the command line arguments
-     */
+public class Testing implements Runnable {
+    
+    private static int instanceCount = 0;
+    private final int currentInstance = instanceCount++;
+    private int countDown = 5;
+    
+    @Override
+    public String toString() {
+        return Thread.currentThread() + " " + currentInstance;
+    }
+
     public static void main(String[] args) {
-        // TODO code application logic here
+        ExecutorService exec = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            exec.execute(new Testing());
+        }
+        System.out.println("Started all threads");
+        exec.shutdown();
+        
+        
+    }
+    
+    @Override
+    public void run() {
+        while (true) {
+            System.out.println(this + " Counting " + countDown);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Testing.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (countDown-- == 0) {
+                return;
+            }
+        }
     }
     
 }
