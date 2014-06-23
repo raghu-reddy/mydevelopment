@@ -8,39 +8,19 @@ import java.util.logging.Logger;
 
 public class Testing implements Runnable {
     
-    private static int instanceCount = 0;
-    private final int currentInstance = instanceCount++;
-    private int countDown = 5;
-    
-    @Override
-    public String toString() {
-        return Thread.currentThread() + " " + currentInstance;
-    }
+    class SomeException extends Exception {}
 
     public static void main(String[] args) {
-        ExecutorService exec = Executors.newCachedThreadPool();
-        for (int i = 0; i < 5; i++) {
-            exec.execute(new Testing());
+        try {
+            System.out.println("in try");
+            throw new SomeException();
+        } catch (SomeException e) {
+            System.out.println("In SomeException");
+        } finally {
+            System.out.println("In finally");
         }
-        System.out.println("Started all threads");
-        exec.shutdown();
         
         
-    }
-    
-    @Override
-    public void run() {
-        while (true) {
-            System.out.println(this + " Counting " + countDown);
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Testing.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (countDown-- == 0) {
-                return;
-            }
-        }
     }
     
 }
