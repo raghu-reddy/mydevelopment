@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.raghu.utils.search.SearchTree;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -15,7 +16,8 @@ public class AppConfig {
     private static AppConfig appConfig;
     private String contentsSrcName;
     private String contentsSrcType;
-    
+    private SearchTree searchTree;
+
     private AppConfig() {
         File configFile = new File("config\\app-config.xml");
         
@@ -30,8 +32,8 @@ public class AppConfig {
         
         contentsSrcType = dataSource.getElementsByTagName("type").item(0).getTextContent();
         contentsSrcName = dataSource.getElementsByTagName("path").item(0).getTextContent();
+        searchTree = new SearchTree(contentsSrcType, contentsSrcName);
         
-        //close(configFile);
                 
     }
     
@@ -45,6 +47,10 @@ public class AppConfig {
     
     public static AppConfig getAppConfig() {
         return new AppConfig();
+    }
+    
+    public SearchTree getSearchTree() {
+        return searchTree;
     }
     
     public static void main(String[] args) {

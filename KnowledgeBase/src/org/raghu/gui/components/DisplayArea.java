@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
+import org.raghu.utils.application.AppObjects;
 
 public class DisplayArea extends JPanel {
     
@@ -22,7 +23,9 @@ public class DisplayArea extends JPanel {
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
         
         jTextArea.setText("Your text goes here");
+        jTextArea.setEditable(false);
         add(jScrollPane);
+        AppObjects.registerAppObject("DisplayArea", jTextArea);
     }
     
 }

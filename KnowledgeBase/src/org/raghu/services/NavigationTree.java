@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.raghu.utils.application.AppObjects;
+import org.raghu.utils.reader.ErrorReadingSourceException;
 import org.raghu.utils.reader.InputFileReader;
 import org.raghu.utils.reader.InputReader;
 import org.raghu.utils.reader.LinesArrayList;
@@ -42,10 +45,11 @@ public class NavigationTree {
         HashMap<Integer, DefaultMutableTreeNode> levelRootMap = 
                 new HashMap<Integer, DefaultMutableTreeNode>();
         
-                
-        jTree = new JTree();
-        DefaultMutableTreeNode dNode = new DefaultMutableTreeNode("Root");
-        jTree = new JTree(dNode);
+
+        DefaultMutableTreeNode dNode = new DefaultMutableTreeNode(new NavigationNode("Root", "0.txt"));
+        DefaultTreeModel treeModel = new DefaultTreeModel(dNode);
+        jTree = new JTree(treeModel);
+
         int lastLevel = -1;
         levelRootMap.put(lastLevel, dNode);
         DefaultMutableTreeNode currentRoot = dNode;
@@ -77,8 +81,7 @@ public class NavigationTree {
 
         try {
             reader = new InputFileReader(fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ErrorReadingSourceException e) {
             System.exit(0);
         }
         

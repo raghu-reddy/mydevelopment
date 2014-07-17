@@ -22,10 +22,19 @@ public class AddComponents {
         gbc.gridheight = 1;
         SearchPanel searchPanel = new SearchPanel();
         container.add(searchPanel, gbc);
-        searchPanel.searchText.getDocument().addDocumentListener(new SearchChangeListener());
         
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        ResultsPanel resultsPanel = new ResultsPanel();
+        container.add(resultsPanel, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1;
         gbc.weighty = 6;
@@ -40,7 +49,7 @@ public class AddComponents {
         gbc.weightx = 6;
         gbc.weighty = 1;
         gbc.gridwidth = 1;
-        gbc.gridheight = 2;
+        gbc.gridheight = 3;
         DisplayArea displayArea = new DisplayArea();
         container.add(displayArea, gbc);
         
